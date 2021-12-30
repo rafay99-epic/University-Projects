@@ -1,0 +1,63 @@
+﻿@model IEnumerable<project.Models.passenger>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Passenger</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-bordered">
+    <tr class="btn-primary">
+        <th>
+            @Html.DisplayNameFor(model => model.password)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.f_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.l_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.e_mail_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tel_num)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.password)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.f_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.l_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.e_mail_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tel_num)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.profile_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.profile_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.profile_id })
+        </td>
+    </tr>
+}
+
+</table>

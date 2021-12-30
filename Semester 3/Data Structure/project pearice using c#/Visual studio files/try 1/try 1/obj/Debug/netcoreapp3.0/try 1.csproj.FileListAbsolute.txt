@@ -1,0 +1,11 @@
+E:\University\Lectures & Assignments\3rd Semester\Data Structure\Projects\project pearice using c#\Visual studio files\try 1\try 1\bin\Debug\netcoreapp3.0\try 1.exe
+E:\University\Lectures & Assignments\3rd Semester\Data Structure\Projects\project pearice using c#\Visual studio files\try 1\try 1\bin\Debug\netcoreapp3.0\try 1.deps.json
+E:\University\Lectures & Assignments\3rd Semester\Data Structure\Projects\project pearice using c#\Visual studio files\try 1\try 1\bin\Debug\netcoreapp3.0\try 1.runtimeconfig.json
+E:\University\Lectures & Assignments\3rd Semester\Data Structure\Projects\project pearice using c#\Visual studio files\try 1\try 1\bin\Debug\netcoreapp3.0\try 1.runtimeconfig.dev.json
+E:\University\Lectures & Assignments\3rd Semester\Data Structure\Projects\project pearice using c#\Visual studio files\try 1\try 1\bin\Debug\netcoreapp3.0\try 1.dll
+E:\University\Lectures & Assignments\3rd Semester\Data Structure\Projects\project pearice using c#\Visual studio files\try 1\try 1\bin\Debug\netcoreapp3.0\try 1.pdb
+E:\University\Lectures & Assignments\3rd Semester\Data Structure\Projects\project pearice using c#\Visual studio files\try 1\try 1\obj\Debug\netcoreapp3.0\try 1.csprojAssemblyReference.cache
+E:\University\Lectures & Assignments\3rd Semester\Data Structure\Projects\project pearice using c#\Visual studio files\try 1\try 1\obj\Debug\netcoreapp3.0\try 1.AssemblyInfoInputs.cache
+E:\University\Lectures & Assignments\3rd Semester\Data Structure\Projects\project pearice using c#\Visual studio files\try 1\try 1\obj\Debug\netcoreapp3.0\try 1.AssemblyInfo.cs
+E:\University\Lectures & Assignments\3rd Semester\Data Structure\Projects\project pearice using c#\Visual studio files\try 1\try 1\obj\Debug\netcoreapp3.0\try 1.dll
+E:\University\Lectures & Assignments\3rd Semester\Data Structure\Projects\project pearice using c#\Visual studio files\try 1\try 1\obj\Debug\netcoreapp3.0\try 1.pdb

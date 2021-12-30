@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="flight">
+    <Key>
+      <PropertyRef Name="flight_id" />
+    </Key>
+    <Property Name="flight_id" Type="int" Nullable="false" />
+    <Property Name="airline_name" Type="varchar" MaxLength="10" />
+    <Property Name="from_location" Type="varchar" MaxLength="10" />
+    <Property Name="to_location" Type="varchar" MaxLength="10" />
+    <Property Name="departure_time" Type="datetime" />
+    <Property Name="arrival_time" Type="datetime" />
+    <Property Name="duration" Type="time" Precision="7" />
+    <Property Name="total_seats" Type="int" />
+  </EntityType>
+  <EntityType Name="flight_detail">
+    <Key>
+      <PropertyRef Name="flight_no" />
+    </Key>
+    <Property Name="flight_departure_date" Type="datetime" />
+    <Property Name="price" Type="int" />
+    <Property Name="available_seats" Type="int" />
+    <Property Name="flight_id" Type="int" Nullable="false" />
+    <Property Name="flight_no" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_flight_detail_flight">
+    <End Role="flight" Type="Self.flight" Multiplicity="1" />
+    <End Role="flight_detail" Type="Self.flight_detail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="flight">
+        <PropertyRef Name="flight_id" />
+      </Principal>
+      <Dependent Role="flight_detail">
+        <PropertyRef Name="flight_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Database1ModelStoreContainer">
+    <EntitySet Name="flight" EntityType="Self.flight" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="flight_detail" EntityType="Self.flight_detail" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_flight_detail_flight" Association="Self.FK_flight_detail_flight">
+      <End Role="flight" EntitySet="flight" />
+      <End Role="flight_detail" EntitySet="flight_detail" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,559 @@
+                                  Bishop.h
+
+#pragma once
+#include<iostream>
+#include<string>
+#include"CHESS.h"
+
+using namespace std;
+
+class Bishop :virtual public CHESS
+{
+protected:
+	string r; //to check the movement fot the bishop
+public:
+	Bishop();
+	~Bishop();
+	void setr(string choice);
+	void condition(string s);
+
+};
+
+
+                             bishop.ccp
+
+
+#include "Bishop.h"
+#include<iostream>
+#include<string>
+
+
+using namespace std;
+
+
+Bishop::Bishop()
+{
+}
+
+
+Bishop::~Bishop()
+{
+}
+
+void Bishop::setr(string choice)
+{
+	r = choice;
+}
+void Bishop  ::condition(string s)
+{
+	// to get the value from the user 
+	string a;
+	int d, f, n, b;
+	cout << "\nenter the the index to move upon of d and f";
+	cin >> d >> f;
+	cout << "\nenter the the current index to move of n and b";
+	cin >> n >> b;
+	// condition for the bishop
+	if (s == "B" || s == "b")
+	{
+		movement[d][f] = "B";
+		movement[n][b] = " ";
+	}
+}
+
+
+                                 chess.h
+
+#pragma once
+#include<iostream>
+#include<string>
+
+using namespace std;
+
+class CHESS
+{
+protected:
+	string movement[8][8] = {
+		"R","N","B","Q","K","B","N","R",
+		"P","P","P","P","P","P","P","P",
+		"0","1","2","3","4","5","6","7",
+		"0","1","2","3","4","5","6","7",
+		"0","1","2","3","4","5","6","7",
+		"0","1","2","3","4","5","6","7",
+		"P","P","P","P","P","P","P","P",
+		"R","N","B","Q","K","B","N","R"
+	};
+	string king[2] = { "K","K" };
+	string queen[2] = { "Q","Q" };
+	string rock[4] = { "R","R","R","R" };
+	string bishops[4] = { "B","B","B","B" };
+	string knight[4] = { "K","K","K","K" };
+	string pawn[16] = {
+		"p","p","p","p",
+		"p","p","p","p",
+		"p","p","p","p",
+		"p","p","p","p"
+	};
+	
+public:
+	string choice;
+	void display();
+	virtual void condition(string s);
+	CHESS();
+	~CHESS();
+	
+};
+
+                            chess.ccp
+
+
+#include "CHESS.h"
+#include<iostream>
+#include<string>
+
+using namespace std;
+
+CHESS::CHESS()
+{
+}
+
+
+CHESS::~CHESS()
+{
+}
+
+
+void CHESS::display()
+{
+
+	cout << "\n\n\n\t\t  _______________________________________________________________________________________________";
+	cout << "\n\t\t |           |           |           |           |           |           |           |           |";
+	cout << "\n\t\t0|    " << movement[0][0] << "      |    " << movement[0][1] << "      |    " << movement[0][2] << "      |    " << movement[0][3] << "      |    " << movement[0][4] << "      |    " << movement[0][5] << "      |    " << movement[0][6] << "      |    " << movement[0][7] << "      |";
+	cout << "\n\t\t |___________|___________|___________|___________|___________|___________|___________|___________|";
+	cout << "\n\t\t |           |           |           |           |           |           |           |           |";
+	cout << "\n\t\t1|    " << movement[1][0] << "      |    " << movement[1][1] << "      |    " << movement[1][2] << "      |    " << movement[1][3] << "      |    " << movement[1][4] << "      |    " << movement[1][5] << "      |    " << movement[1][6] << "      |    " << movement[1][7] << "      |";
+	cout << "\n\t\t |___________|___________|___________|___________|___________|___________|___________|___________|";
+	cout << "\n\t\t |           |           |           |           |           |           |           |           |";
+	cout << "\n\t\t2|    " << movement[2][0] << "      |    " << movement[2][1] << "      |    " << movement[2][2] << "      |    " << movement[2][3] << "      |    " << movement[2][4] << "      |    " << movement[2][5] << "      |    " << movement[2][6] << "      |    " << movement[2][7] << "      |";
+	cout << "\n\t\t |___________|___________|___________|___________|___________|___________|___________|___________|";
+	cout << "\n\t\t |           |           |           |           |           |           |           |           |";
+	cout << "\n\t\t3|    " << movement[3][0] << "      |    " << movement[3][1] << "      |    " << movement[3][2] << "      |    " << movement[3][3] << "      |    " << movement[3][4] << "      |    " << movement[3][5] << "      |    " << movement[3][6] << "      |    " << movement[3][7] << "      |";
+	cout << "\n\t\t |___________|___________|___________|___________|___________|___________|___________|___________|";
+	cout << "\n\t\t |           |           |           |           |           |           |           |           |";
+	cout << "\n\t\t4|    " << movement[4][0] << "      |    " << movement[4][1] << "      |    " << movement[4][2] << "      |    " << movement[4][3] << "      |    " << movement[4][4] << "      |    " << movement[4][5] << "      |    " << movement[4][6] << "      |    " << movement[4][7] << "      |";
+	cout << "\n\t\t |___________|___________|___________|___________|___________|___________|___________|___________|";
+	cout << "\n\t\t |           |           |           |           |           |           |           |           |";
+	cout << "\n\t\t5|    " << movement[5][0] << "      |    " << movement[5][1] << "      |    " << movement[5][2] << "      |    " << movement[5][3] << "      |    " << movement[5][4] << "      |    " << movement[5][5] << "      |    " << movement[5][6] << "      |    " << movement[5][7] << "      |";
+	cout << "\n\t\t |___________|___________|___________|___________|___________|___________|___________|___________|";
+	cout << "\n\t\t |           |           |           |           |           |           |           |           |";
+	cout << "\n\t\t6|    " << movement[6][0] << "      |    " << movement[6][1] << "      |    " << movement[6][2] << "      |    " << movement[6][3] << "      |    " << movement[6][4] << "      |    " << movement[6][5] << "      |    " << movement[6][6] << "      |    " << movement[6][7] << "      |";
+	cout << "\n\t\t |___________|___________|___________|___________|___________|___________|___________|___________|";
+	cout << "\n\t\t |           |           |           |           |           |           |           |           |";
+	cout << "\n\t\t7|    " << movement[7][0] << "      |    " << movement[7][1] << "      |    " << movement[7][2] << "      |    " << movement[7][3] << "      |    " << movement[4][4] << "      |    " << movement[7][5] << "      |    " << movement[7][6] << "      |    " << movement[7][7] << "      |";
+	cout << "\n\t\t |___________|___________|___________|___________|___________|___________|___________|___________|" << endl;
+	cout << "\n\t\t       0            1           2            3          4           5           6            7" << endl;
+}
+
+ void  CHESS::  condition(string s)
+{
+
+	string a;
+	int d, f, n, b;
+	cout << "\nenter the the index to move upon of d and f: ";
+	cin >> d >> f;
+	cout << "\nenter the the current index to move of n and b: ";
+	cin >> n >> b;
+}
+
+
+                    king.h
+ 
+#pragma once
+#include<iostream>
+#include<string>
+#include"CHESS.h"
+
+using namespace std;
+
+class King :virtual public CHESS
+{
+protected:
+	string v; // to check the move for the king
+public:
+	void setv(string choice);
+	void condition(string s);
+	King();
+	~King();
+};
+
+
+
+                  king.ccp
+
+#include<iostream>
+#include<string>
+#include"CHESS.h"
+#include "King.h"
+
+
+using namespace std;
+
+
+King::King()
+{
+}
+
+
+King::~King()
+{
+}
+
+
+void King ::condition(string s)
+{
+
+	string a;
+	int d, f, n, b;
+	cout << "\nenter the the index to move upon of d and f";
+	cin >> d >> f;
+	cout << "\nenter the the current index to move of n and b";
+	cin >> n >> b;
+	if (s == "K" || s == "k")
+	{
+		movement[d][f] = "K";
+		movement[n][b] = " ";
+	}
+}
+
+
+         
+                  Night.h
+
+#include<iostream>
+#include<string>
+#include"CHESS.h"
+#include "Knight.h"
+using namespace std;
+
+
+Knight::Knight()
+{
+}
+
+
+Knight::~Knight()
+{
+}
+
+
+
+void Knight::condition(string s)
+{
+
+	string a;
+	int d, f, n, b;
+	cout << "\nenter the the index to move upon of d and f";
+	cin >> d >> f;
+	cout << "\nenter the the current index to move of n and b";
+	cin >> n >> b;
+
+if (s == "N" || s == "n")
+{
+	movement[d][f] = "N";
+	movement[n][b] = " ";
+}
+}
+
+
+
+                                Knight.ccp
+
+
+#include<iostream>
+#include<string>
+#include"CHESS.h"
+#include "Knight.h"
+using namespace std;
+
+
+Knight::Knight()
+{
+}
+
+
+Knight::~Knight()
+{
+}
+
+
+
+void Knight::condition(string s)
+{
+
+	string a;
+	int d, f, n, b;
+	cout << "\nenter the the index to move upon of d and f";
+	cin >> d >> f;
+	cout << "\nenter the the current index to move of n and b";
+	cin >> n >> b;
+
+if (s == "N" || s == "n")
+{
+	movement[d][f] = "N";
+	movement[n][b] = " ";
+}
+}
+
+                Pawn.h
+
+
+#pragma once
+#include<iostream>
+#include<string>
+#include"CHESS.h"
+
+using namespace std;
+
+class Pawn :virtual public CHESS
+{
+protected:
+	string a; // to check the movement for the pawn
+public:
+	Pawn();
+	~Pawn();
+	void seta(string choice);
+	void condition(string s);
+
+};
+
+
+
+            pawn.ccp
+
+
+#include "Pawn.h"
+#include<iostream>
+#include<string>
+
+using namespace std;
+
+
+Pawn::Pawn()
+{
+}
+Pawn::~Pawn()
+{
+}
+
+void Pawn::condition(string s)
+{
+
+	string a;
+	int d, f, n, b;
+	cout << "\nenter the the index to move upon of d and f";
+	cin >> d >> f;
+	cout << "\nenter the the current index to move of n and b";
+	cin >> n >> b;
+
+	if (s == "p" || s == "P")
+	{
+		movement[d][f] = "P";
+		movement[n][b] = " ";
+	}
+}
+
+
+                        Queen.h
+
+
+
+#pragma once
+#include<iostream>
+#include<string>
+#include"CHESS.h"
+
+using namespace std;
+
+class Quene :virtual public CHESS
+{
+protected:
+	string k;  ///to check the movment for the queen 
+public:
+	Quene();
+	~Quene();
+	
+	void condition(string s);
+};
+
+
+
+                       Queen.ccp
+
+#include "Quene.h"
+#include<iostream>
+#include<string>
+
+
+using namespace std;
+
+
+Quene::Quene()
+{
+}
+
+
+Quene::~Quene()
+{
+}
+
+
+
+void Quene::condition(string s)
+{
+
+	string a;
+	int d, f, n, b;
+	cout << "\nenter the the index to move upon of d and f";
+	cin >> d >> f;
+	cout << "\nenter the the current index to move of n and b";
+	cin >> n >> b;
+
+	if (s == "Q" || s == "q")
+	{
+		movement[d][f] = "Q";
+		movement[n][b] = " ";
+
+	}
+}
+
+
+                          ROck.h
+
+
+
+#pragma once
+#include<iostream>
+#include<string>
+#include"CHESS.h"
+using namespace std;
+
+class Rock :virtual public CHESS
+{
+protected:
+	string h;  /// to check the movment for the rock
+public:
+	void seth(string choice);
+	Rock();
+	~Rock();
+	void condition(string s);
+};
+
+
+
+                      Rock.ccp
+
+#include "Rock.h"
+#include<iostream>
+#include<string>
+
+using namespace std;
+
+
+Rock::Rock()
+{
+	cout << "constructor is called ";
+}
+
+
+Rock::~Rock()
+{
+	cout << "destuctor is called";
+}
+
+void Rock::seth(string choice)
+{
+	h = choice;
+}
+
+void Rock::condition(string s)
+{
+
+	string a;
+	int d, f, n, b;
+	cout << "\nEnter the the index to move upon of d and f: ";
+	cin >> d >> f;
+	cout << "\nEnter the the current index to move of n and b: ";
+	cin >> n >> b;
+
+	if (s == "R" || s == "r")
+	{
+		movement[d][f] = "R";
+		movement[n][b] = " ";
+	}
+}
+
+
+                 Source file.ccp
+
+
+
+#include<iostream>
+#include<string>
+#include<Windows.h>
+#include"CHESS.h"
+#include"Bishop.h"
+#include"King.h"
+#include"Knight.h"
+#include"Quene.h"
+#include"Pawn.h"
+#include"Rock.h"
+
+using namespace std;
+
+int main()
+{
+
+	CHESS C;
+
+	string choice;
+	system("colour 7C");
+	do
+	{
+		system("cls");
+		cout << endl << endl << endl << endl << endl;
+		cout << "									 Chess Game                 " << endl;
+		cout << endl << endl;
+		cout << "					     				 Welcome                    ";
+
+		C.display();
+		cout << "Player 1 Turn ";
+		cout << endl;
+		cout << "Enter the movement : ";
+		cin >> choice;
+		C.condition(choice);
+		system("cls");
+		C.display();
+		cout << "Player 2 Turn ";
+		cout << endl;
+		cout << "Enter the movement : ";
+		cin >> choice;
+		C.condition(choice);
+		system("cls");
+		C.display();
+	} while (true);
+	system("pause");
+	return 0;
+}
+
+
+
+
+
+
+                    THE END
+
+
+
+
+
+                 

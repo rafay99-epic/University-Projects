@@ -1,0 +1,108 @@
+
+<html>
+<head>
+
+  <script src="jquery.min.js"></script>
+  <script type="text/JavaScript" language="JavaScript">
+  $(document).ready(function()
+    {
+        var bearer ="";
+        var user ={
+            grant_type:'password',
+            username:'Numan@yahoo.com',
+            password:'Numan123@#'
+        };
+        $.ajax({
+            type: "POST",
+            url: "https://localhost:44339/token",
+            data:user,
+            contentType: "application/x-www-form-urlencoded",
+            dataType: "json",
+            success: function (data) {
+                bearer = data.access_token;
+				localStorage.setItem('token',bearer);
+				var x = localStorage.getItem("token");
+                window.location.href =< a href = "../dashboard.html" >../ dashboard.html</a >;
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+	});
+    var accessToken = '';
+    var baseURI = '';
+	function authenticateUser() {
+          var url_base = 'http://localhost:58440/token';
+          var requestPayload = {
+              'grant_type': 'password',
+              'username': '',
+              'password': '',
+              'scope': ''
+          }
+          $.ajax({
+              'url': url_base,
+              'type': 'POST',
+              'content-Type': 'x-www-form-urlencoded',
+              'dataType': 'json',
+              'data': requestPayload,
+              'success': function (result) {
+                accessToken = result.access_token;
+                //baseURI = result.resource_server_base_uri;
+                alert('Success!\r\nAccess Token:\r' + accessToken + 'Base URI:\r'+ baseURI);
+				
+				//getAgentList();
+              },
+              'error': function (XMLHttpRequest, textStatus, errorThrown) {
+                //Process error actions
+                alert('Error thrown: ' + JSON.stringify(errorThrown));
+                alert(XMLHttpRequest.status + ' ' + 
+                    XMLHttpRequest.statusText+textStatus);
+              }
+          });
+        }
+		function getAgentList() {
+          // The baseURI variable is created by the result.base_server_base_uri 
+          // which is returned when getting a token and should be used to 
+          // create the url_base.
+          var url_base = baseURI;
+          $.ajax({
+              'url': 'http://localhost:51564/API/Values',
+              'type': 'GET',
+              'content-Type': 'x-www-form-urlencoded',
+              'dataType': 'json',
+              'headers': {
+                // Use access_token previously retrieved from inContact token 
+                // service.
+                'Authorization': 'bearer ' + accessToken
+              },
+              'success': function (result) {
+                //Process success actions
+                var returnResult = JSON.stringify(result);
+                alert('Success!\r\n' + returnResult);
+                document.getElementById('callResults').innerHTML = returnResult;
+                return result;
+              },
+              'error': function (XMLHttpRequest, textStatus, errorThrown) {
+                //Process error actions
+                alert('Error: ' + errorThrown);
+                console.log(XMLHttpRequest.status + ' ' + 
+                    XMLHttpRequest.statusText);
+                return false;
+              }
+          });
+      }
+      authenticateUser();
+</script>
+</head>
+<body>
+	
+</body>
+</html>
+
+
+
+
+

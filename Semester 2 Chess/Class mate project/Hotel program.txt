@@ -1,0 +1,292 @@
+#include<iostream>
+#include<fstream>
+#include<string>
+using namespace std;
+class Hotel
+{
+public:
+void dinner()
+{
+
+	cout << "Which food would u like to take?" << endl;
+	cout << "Items" << "-------------------------" << "Price" << endl;
+	cout << "Chicken Karahi ---------- Rs.500/-" << endl;
+	cout << "Mutton ------------------ Rs.800/-" << endl;
+	cout << "Chicken Boneless -------- Rs.600/-" << endl;
+	cout << "Chicken Jalfrazi ---------Rs.700/- " << endl;
+	cout << "Fish -------------------- Rs.900/-" << endl;
+	cout << "Chicken Biryani --------- Rs.200/-" << endl;
+	cout << "Kabli Pulao ------------- Rs.300/-" << endl;
+	cout << "Chicken Tikka ----------- Rs.150/-" << endl;
+	cout << "Daal Mash ----------------Rs.200/-" << endl;
+	cout << "Pizza ------------------ Rs.900/-" << endl;
+	cout << "Zinger Burger ---------- Rs.500/-" << endl;
+	cout << "Cold Drinks ------------ Rs.400/-" << endl;
+	cout << "Sweet ------------------ Rs.450/-" << endl;
+	cout << "Beaf ------------------- Rs.600/-" << endl;
+}
+void morning()
+{
+	cout << "Items" << "---------------------" << "Price" << endl;
+	cout << "Fried Egg ----------- Rs.100/-" << endl;
+	cout << "Omelette ------------ Rs.70/-" << endl;
+	cout << "Chicken Channay ----- Rs.150/-" << endl;
+	cout << "Paratha ------------- Rs.40/-" << endl;
+	cout << "Tea ----------------- Rs.30/-" << endl;
+	cout << "Halwa Puri ---------- Rs.200/-" << endl;
+	cout << "Paye ---------------- Rs.300/-" << endl;
+	cout << "Nehari -------------- Rs.300/-" << endl;
+}
+};
+class Dishes
+{
+
+public:
+	void choice(string dish)
+	{
+		if (dish == "Beaf" || dish == "Chicken Karahi" || dish == "Chicken Tika" || dish == "Chicken Jalfrazi" || dish == "Pizza" || dish == "Zinger Burger" ||
+			dish == "Mutton" || dish == "Chicken Boneless" || dish == "Cold Drinks" || dish == "Kabli Pulao" || dish == "Daal Mash" || dish == "Sweet" ||
+			dish == "Fish" || dish == "Chicken Biryani")
+		{
+			cout << "Have a nice meal" << endl;
+		}
+		else if (dish == "Fried_Egg" || dish == "Omellete" || dish == "Chicken Channay" || dish == "Parataha" || dish == "Tea" || dish == "Halwa Puri"
+			|| dish == "Paye" || dish == "Nehari")
+			cout << "Have a nice Breakfast" << endl;
+		else
+			cout << "Sorry! You Entered a Invalid Item" << endl;
+	}
+};
+class rooms
+{
+protected:
+	int roomno;
+public:
+	rooms()
+	{
+		roomno = 0;
+
+	}
+	void roomdetails()
+	{
+		int singleroom;
+		cout << "Enter 1 for single room and 2 for double room" << endl;
+		cin >> singleroom;
+		if (singleroom == 1) {
+			cout << "\nNon-AC" << endl;
+			cout << "\nNon Comfort" << endl;
+			cout << "\nSmall Size" << endl;
+			cout << "\nRent:1000 " << endl;
+		}
+		else if (singleroom == 2) {
+			cout << "\nAC "<< endl;
+			cout << "\nComfort " << endl;
+			cout << "\nBig Size " << endl;
+			cout << "\nRent: 2000 " << endl;
+		}
+	}
+	void setregistration()
+	{
+		string name[9],choice;
+		string CNIC[9];
+		double contact[9];
+		int stay[9];
+		double billroom[9];
+		int roomtype;
+		for (int i = 0; i < 9; i++)
+		{
+			cout << "name" << endl;
+			cin >> name[i];
+			cout << "CNIC" << endl;
+			cin >> CNIC[i];
+			cout << "contact" << endl;
+			cin >> contact[i];
+			cout << "How many days will you stay" << endl;
+			cin >> stay[i];
+			cout << "Enter 1 if you want single room or press 2 for double room" << endl;
+			cin >> roomtype;
+			if (roomtype == 1) {
+				billroom[i] = stay[i] * 1000;
+			}
+			else if(roomtype == 2) {
+				billroom[i] = stay[i] * 2000;
+			}
+			cout << "room number" << i + 1 << "------" << "is alloted to -----------" << name[i] << endl;
+			cout << "your bill is \t" << billroom[i] << endl;
+			fstream mfile1;
+			mfile1.open("hotelfile.txt", ios::in);
+			mfile1 << roomno << "Booked" << billroom;
+
+			mfile1.close();
+			cout << "Enter y if you want to book another room" << endl;
+			cin >> choice;
+			if (choice == "y" || choice=="Y")
+				continue;
+			else
+			break;
+		}
+	}
+};
+class bill :public rooms, Dishes, Hotel
+{
+protected:
+	double billofcustomer;
+	string dish;
+	int totalbill,c;
+public:
+	bill()
+	{
+		billofcustomer = 0;
+		totalbill = 0;
+	}
+	void setbill()
+	{
+		int price = 0;
+		do
+		{
+			cout << "enter the dish name" << endl;
+			cin >> dish;
+			if (dish == "Beaf")
+			{
+				price=600;
+			}
+			else if (dish == "Chicken Karahi")
+			{
+				cout << price << "=" << 500;
+			}
+			else if (dish == "Mutton")
+			{
+				cout << price <<"=" << 800;
+			}
+			else if (dish == "Chicken Boneless")
+				cout << price << "=" << 600;
+			else if (dish == "Checken Jafrezi")
+				cout << price << "=" << 700;
+			else if (dish == "Fish")
+				cout << price << "=" << 900;
+			else if (dish == "Chicken Biryani")
+				cout << price << "=" << 200;
+			else if (dish == "Kabli Pulao")
+				cout << price << "=" << 300;
+			else if (dish == "Chicken Tikka")
+				cout << price << "=" << 150;
+			else if (dish == "Daal Mash")
+				cout << price << "=" << 200;
+			else if (dish == "Pizza")
+				cout << price << "=" << 900;
+			else if (dish == "Zinger Burger")
+				cout << price << "=" << 500;
+			else if (dish == "Cold Drinks")
+				cout << price << "=" << 400;
+			else if (dish == "Sweet")
+				cout << price << "=" << 450;
+			else if (dish == "Beaf")
+			{
+				cout << price << "=" << 600;
+			}
+			else
+			{
+				cout << "We are Not offering this Product Sorry....! :-)" << endl;
+			}
+			cout << "Press 1 if you want to order another dish else press any key" << endl;
+			cin >> c;
+		} while (c==1);
+		{
+			int a;
+			cout << "to continue press 1 \n"
+				<< "to finish order press 0" << endl;
+			cin >> a;
+			if (a == 1)
+			{
+				totalbill = +price;
+
+				while (1);
+			}
+			else if (a == 0)
+			{
+				totalbill = +price;
+			    cout << "your bill is \t" << totalbill << endl;
+				while (0);
+				totalbill = 0;
+				fstream mfile2;
+				mfile2.open("hotelfile.txt", ios::in);
+				mfile2 << totalbill;
+				mfile2.close();
+			}
+
+		}
+	}
+
+
+};
+
+
+int main()
+{
+	int a, b,room;
+	string c,d;
+	Hotel obj;
+	rooms obj1;
+	Dishes obj2;
+	bill obj3;
+	cout << "\tWelcome To Our Hotel" << endl << endl;
+	cout << "\n\tWhich Menu would you like to take?" << endl;
+	cout << "\n\tPress 1 for Admin Services" << endl;
+	cout << "\n\tPress 2 for Customer services" << endl;
+	cin >> a;
+	switch (a)
+	{
+	case 1:
+		cout << "\n\tWhich Menu would you like to take?" << endl;
+		cout << "\n\tPress 1 for Food Menu" << endl;
+		cout << "\n\tPress 2 for Room Details" << endl;
+		cout << "Enter your choice" << endl;
+		cin >> b;
+		switch (b)
+		{
+		case 1:
+			cout << "You want Menu of Breakfast or Dinner" << endl;
+			cin >> d;
+			if(d=="dinner"||d=="Dinner")
+			obj.dinner();
+			else
+			obj.morning();
+			break;
+		case 2:
+			obj1.roomdetails();
+			break;
+		}
+		break;
+	case 2: 
+		cout << "\n\tWhich Menu would you like to take?" << endl;
+		cout << "\n\tPress 1 for Food Order" << endl;
+		cout << "\n\tPress 2 for Room Booking" << endl;
+		cout << "\n\tPress 3 for Bill" << endl;
+		cout << "Enter your choice" << endl;
+		cin >> b;
+		switch (b)
+		{
+		case 1:
+			cout << "You want to order Breakfast or Dinner" << endl;
+			cin >> d;
+			if (d == "dinner" || d == "Dinner")
+				obj.dinner();
+			else
+				obj.morning();
+			cout << "Enter dish you want to have " << endl;
+			cin >> c;
+			obj2.choice(c);
+			break;
+
+		case 2:
+			obj1.setregistration();
+			break;
+		case 3:
+			obj3.setbill();
+			break;
+		}
+	}
+	main();
+	system("pause");
+	return 0;
+}

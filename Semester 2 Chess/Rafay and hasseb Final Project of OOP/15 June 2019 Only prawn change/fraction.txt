@@ -1,0 +1,180 @@
+#pragma once
+#include<iostream>
+#include<string>
+
+using namespace std;
+class fraction
+{
+protected:
+	int num;
+	int dum;
+public:
+	void setnum(int n);
+	void setdum(int d);
+	int getnum();
+	int getdum();
+	fraction operator +(fraction& c)
+	{
+		fraction ans;
+		ans.dum = dum + c.dum;
+		ans.num = num + c.num;
+		return ans;
+	}
+	fraction operator -(fraction& c)
+	{
+		fraction ans;
+		ans.dum = dum - c.dum;
+		ans.num = num - c.num;
+		return ans;
+	}
+	fraction operator /(fraction& c)
+	{
+		fraction ans;
+		ans.dum = dum / c.dum;
+		ans.num = num / c.num;
+		return ans;
+	}
+	fraction operator *(fraction& c)
+	{
+		fraction ans;
+		ans.dum = dum * c.dum;
+		ans.num = num * c.num;
+		return ans;
+	}
+	bool operator < (fraction& c)
+	{
+		if (num < c.num && dum < c.dum)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	bool operator > (fraction& c)
+	{
+		if (num > c.num && dum > c.dum)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	bool operator == (fraction& c)
+	{
+		if (num == c.num && dum == c.dum)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	bool operator = (fraction& c)
+	{
+		if ( num = c.num)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		if (dum = c.dum)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	bool operator != (fraction& c)
+	{
+		if (num != c.num && dum != c.dum)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	void setvalue();
+};
+
+
+
+
+#include "fraction.h"
+#include<iostream>
+#include<string>
+
+using namespace std;
+
+void fraction::setnum(int n)
+{
+	num = n;
+}
+void fraction::setdum(int d)
+{
+	dum = d;
+}
+int fraction::getdum()
+{
+	return dum;
+}
+int fraction::getnum()
+{
+	return num;
+}
+void fraction::setvalue()
+{
+	cout << "Enter the value of the num: ";
+	cin >> num;
+	cout << endl;
+	cout << "Enter the value of the dum: ";
+	cin>>dum;
+	cout << endl;
+}
+
+
+
+
+
+#include<iostream>
+#include<string>
+#include"fraction.h"
+
+using namespace std;
+
+int main()
+{
+	fraction F1, F2,F3, F4, F5, F6;
+	cout << "Enter the value for F1: ";
+	cout << endl;
+	F1.setvalue();
+	cout << "Enter the value for F2: ";
+	cout << endl;
+	F2.setvalue();
+	cout << "Enter the value for F3: ";
+	cout << endl;
+	F3.setvalue();
+	cout << "Enter the value for F4: ";
+	cout << endl;
+	F4.setvalue();
+	cout << "Enter the value for F5: ";
+	cout << endl;
+	F5.setvalue();
+    F6 = F1 + F2 + F3 + F4 + F5;
+	system("pause");
+	return 0;
+}
+
+
+

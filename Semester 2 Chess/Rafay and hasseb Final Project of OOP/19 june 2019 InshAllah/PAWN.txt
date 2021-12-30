@@ -1,0 +1,43 @@
+                                       PAWN.H
+
+#pragma once
+#include<iostream>
+#include<string>
+#include"CHESS.h"
+
+using namespace std;
+
+class Pawn:virtual public CHESS
+{
+protected:
+	string a; // to check the movement for the pawn
+public:
+	Pawn();
+	~Pawn();
+	void seta(string choice);
+};
+
+
+
+
+
+
+                                 PAWN.CCP
+
+#include "Pawn.h"
+#include<iostream>
+#include<string>
+
+using namespace std;
+
+
+Pawn::Pawn()
+{
+}
+Pawn::~Pawn()
+{
+}
+void Pawn::seta(string choice)
+{
+	a = choice;
+}

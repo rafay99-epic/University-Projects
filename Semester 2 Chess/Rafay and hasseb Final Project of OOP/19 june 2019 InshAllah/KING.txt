@@ -1,0 +1,50 @@
+                                                            KING.H
+
+
+#pragma once
+#include<iostream>
+#include<string>
+#include"CHESS.h"
+
+using namespace std;
+
+class King :virtual public CHESS
+{
+protected:
+	string v; // to check the move for the king
+public:
+	void setv(string choice);
+	
+	King();
+	~King();
+};
+
+
+
+
+
+                                     KING.CCP
+
+
+#include<iostream>
+#include<string>
+#include"CHESS.h"
+#include "King.h"
+
+
+using namespace std;
+
+
+King::King()
+{
+}
+
+
+King::~King()
+{
+}
+
+void King::setv(string choice)
+{
+	v = choice;
+}

@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="vote_databaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="admin_Login">
+    <Key>
+      <PropertyRef Name="admin_Id" />
+    </Key>
+    <Property Name="admin_Id" Type="int" Nullable="false" />
+    <Property Name="admin_username" Type="nvarchar" MaxLength="50" />
+    <Property Name="password" Type="nvarchar" MaxLength="50" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="user_id" Type="int" />
+  </EntityType>
+  <EntityType Name="userlogin">
+    <Key>
+      <PropertyRef Name="user_Id" />
+    </Key>
+    <Property Name="user_Id" Type="int" Nullable="false" />
+    <Property Name="email" Type="nvarchar" MaxLength="50" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" />
+    <Property Name="password" Type="nvarchar" MaxLength="50" />
+    <Property Name="address" Type="nvarchar" MaxLength="50" />
+    <Property Name="country" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="verfication">
+    <Key>
+      <PropertyRef Name="verify_Id" />
+    </Key>
+    <Property Name="verify_Id" Type="int" Nullable="false" />
+    <Property Name="user_Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="phone" Type="int" />
+    <Property Name="Email" Type="nvarchar(max)" />
+    <Property Name="CNIC" Type="int" />
+  </EntityType>
+  <EntityType Name="votecast">
+    <Key>
+      <PropertyRef Name="cast_vote_id" />
+    </Key>
+    <Property Name="cast_vote_id" Type="int" Nullable="false" />
+    <Property Name="user_Id" Type="int" Nullable="false" />
+    <Property Name="party" Type="nvarchar" MaxLength="50" />
+    <Property Name="post" Type="nvarchar" MaxLength="50" />
+    <Property Name="email" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="votehistory">
+    <Key>
+      <PropertyRef Name="cast_Id" />
+    </Key>
+    <Property Name="cast_Id" Type="int" Nullable="false" />
+    <Property Name="Parties" Type="nvarchar(max)" />
+    <Property Name="totalvotes" Type="int" />
+    <Property Name="incommingvotes " Type="int" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="user_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_admin_Login_ToTable">
+    <End Role="userlogin" Type="Self.userlogin" Multiplicity="0..1" />
+    <End Role="admin_Login" Type="Self.admin_Login" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="userlogin">
+        <PropertyRef Name="user_Id" />
+      </Principal>
+      <Dependent Role="admin_Login">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_verfication_ToTable">
+    <End Role="userlogin" Type="Self.userlogin" Multiplicity="1" />
+    <End Role="verfication" Type="Self.verfication" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="userlogin">
+        <PropertyRef Name="user_Id" />
+      </Principal>
+      <Dependent Role="verfication">
+        <PropertyRef Name="user_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_votecast_ToTable">
+    <End Role="userlogin" Type="Self.userlogin" Multiplicity="1" />
+    <End Role="votecast" Type="Self.votecast" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="userlogin">
+        <PropertyRef Name="user_Id" />
+      </Principal>
+      <Dependent Role="votecast">
+        <PropertyRef Name="user_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_votehistory_ToTable">
+    <End Role="userlogin" Type="Self.userlogin" Multiplicity="1" />
+    <End Role="votehistory" Type="Self.votehistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="userlogin">
+        <PropertyRef Name="user_Id" />
+      </Principal>
+      <Dependent Role="votehistory">
+        <PropertyRef Name="user_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="vote_databaseModelStoreContainer">
+    <EntitySet Name="admin_Login" EntityType="Self.admin_Login" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="userlogin" EntityType="Self.userlogin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="verfication" EntityType="Self.verfication" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="votecast" EntityType="Self.votecast" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="votehistory" EntityType="Self.votehistory" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_admin_Login_ToTable" Association="Self.FK_admin_Login_ToTable">
+      <End Role="userlogin" EntitySet="userlogin" />
+      <End Role="admin_Login" EntitySet="admin_Login" />
+    </AssociationSet>
+    <AssociationSet Name="FK_verfication_ToTable" Association="Self.FK_verfication_ToTable">
+      <End Role="userlogin" EntitySet="userlogin" />
+      <End Role="verfication" EntitySet="verfication" />
+    </AssociationSet>
+    <AssociationSet Name="FK_votecast_ToTable" Association="Self.FK_votecast_ToTable">
+      <End Role="userlogin" EntitySet="userlogin" />
+      <End Role="votecast" EntitySet="votecast" />
+    </AssociationSet>
+    <AssociationSet Name="FK_votehistory_ToTable" Association="Self.FK_votehistory_ToTable">
+      <End Role="userlogin" EntitySet="userlogin" />
+      <End Role="votehistory" EntitySet="votehistory" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

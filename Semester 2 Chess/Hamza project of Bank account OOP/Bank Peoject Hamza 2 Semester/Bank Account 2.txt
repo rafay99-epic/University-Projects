@@ -1,0 +1,124 @@
+#include <iostream>
+
+class BankAccount {
+protected:
+	double balance;
+public:
+	BankAccount(double startingBalance)
+		{ balance = startingBalance; }
+
+	virtual ~BankAccount() {}
+
+	virtual void deposit(double amt)
+		{ balance += amt; }
+
+	virtual void withdraw(double amt)
+		{ balance -= amt; }
+
+	virtual void printMonthlyStatement() = 0; // pure virtual function
+};
+class Checking : public BankAccount{
+private:
+	double charges;
+	int maxW; // maximum of free withdrawals per month
+	int withdrawals; // number of withdrawals this month
+	void applyCharges(); // calculates the monthly charges and subtracts it from the balance
+
+public:
+	// default: a charge of $0.1 applies after 5 withdrawals per month
+	Checking(double amt, int maxW = 5, double charges = 0.1);
+	virtual ~Checking();
+	void deposit(double amt);  // calls deposit from base class
+	void withdraw(double amt); // checks if enough funds before calling withdraw from base class
+	void printMonthlyStatement(); // prints monthly statement after calculating the charges to update the balance
+};
+class Savings : public BankAccount {
+private:
+	double interestRate;
+	void applyInterest();  // calculates the monthly interest and adds it to the balance
+
+public:
+    Savings(double amt, double intRate = 0.01);
+	virtual ~Savings();
+	void deposit(double amt);    // calls deposit from base class
+	void withdraw(double amt);   // checks if enough funds before calling withdraw from base class
+	void printMonthlyStatement(); // prints monthly statement after calculating the interest to update the balance
+};
+Checking::Checking(double amt, int maxW, double charges): BankAccount(amt)
+{
+    this->maxW = maxW;
+    this->charges = charges;
+    withdrawals = 0;
+}
+Checking:: ~Checking()
+{
+    
+}
+void Checking:: deposit(double amt)// calls deposit from base class
+{
+    BankAccount::deposit(amt);
+}
+void Checking:: withdraw(double amt) // checks if enough funds before calling withdraw from base class
+{
+    if(amt < balance)
+    {
+        BankAccount::withdraw(amt);
+        withdrawals++;
+    }
+    else
+    {
+        cout << "Insuffient funds to complete this transaction" << endl;
+    }
+}
+void Checking:: applyCharges()
+{
+    if(withdrawals > maxW)
+    {
+        balance -= ((withdrawals - maxW) * charges);
+    }
+    
+}
+void Checking::printMonthlyStatement()
+{
+    applyCharges();
+    
+    cout << "Your Balance is: " << balance << endl;
+    cout << "You made " << withdrawals << " total withdrawals" << endl;
+    withdrawals = 0;
+    
+}// prints monthly statement after calculating the charges to update the balance
+
+#include "Savings.h"
+
+using namespace std;
+
+
+Savings::Savings(double amt, double intRate) :BankAccount(amt)
+{
+    interestRate = intRate;
+}
+
+Savings::~Savings()
+{
+    
+}
+void Savings::deposit(double amt)   // calls deposit from base class
+{
+    BankAccount::deposit(amt);
+}
+void Savings::withdraw(double amt)// checks if enough funds before calling withdraw from base class
+{
+    if(amt < balance)
+    {
+        BankAccount::withdraw(amt);
+    }
+    else
+    {
+        cout << "Insuffient funds to complete this transaction" << endl;
+    }
+}
+
+void Savings:: applyInterest()
+{
+    balance = (balance *= interestRate);
+}
