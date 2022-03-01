@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2649fd25bc5b4d6b902e1d5f508633fd" Name="Diagram1">
+        <EntityTypeShape EntityType="vote_databaseModel.admin_Login" Width="1.5" PointX="11.875" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="vote_databaseModel.userlogin" Width="1.5" PointX="7.375" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="vote_databaseModel.verfication" Width="1.5" PointX="12.125" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="vote_databaseModel.votecast" Width="1.5" PointX="3.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="vote_databaseModel.votehistory" Width="1.5" PointX="3.5" PointY="4.375" IsExpanded="true" />
+        <AssociationConnector Association="vote_databaseModel.FK_admin_Login_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="vote_databaseModel.FK_verfication_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="vote_databaseModel.FK_votecast_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="vote_databaseModel.FK_votehistory_ToTable" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

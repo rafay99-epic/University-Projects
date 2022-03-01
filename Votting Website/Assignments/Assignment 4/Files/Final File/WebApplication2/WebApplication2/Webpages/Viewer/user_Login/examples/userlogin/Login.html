@@ -1,0 +1,127 @@
+﻿<html>
+<head>
+    <meta charset="utf-8">
+    <title>Login and Registtation Form</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="../../../../../Scripts/bootstrap.js"></script>
+    <script src="../../../../../Scripts/jquery-3.3.1.js"></script>
+    <link href="../../../../../Content/bootstrap.css" rel="stylesheet" />
+</head>
+<body ng-app="myModule">
+    <div class="hero" ng-controller="loginController">
+        <div class="form-box">
+            <div class="button-box">
+                <div id="btn"></div>
+                <button type="button" class="toggle-btn" onclick="login()">Log In</button>
+                <button type="button" class="toggle-btn" onclick="register()">Register</button>
+            </div>
+            <div class="social-icons">
+                <img src="fb.png">
+                <img src="tw.png">
+                <img src="gp.png">
+            </div>
+            <form action="" method="post" id="login" class="input-group" ng-controller="loginController>
+                <input type="text" class="input-field" placeholder="User Id" name="username" ng-model="email" required>
+
+
+                <input type="text" class="input-field" placeholder="Enter Password" name="password" ng-model="password" required>
+                <br>
+                <input type="checkbox" class="check-box"><span>Remember Password</span>
+                <a href="../dashboard.html">
+                    <button type="button" class="submit-btn" ng-click="loginUser()>Log in</button>
+                </a>
+            </form>
+
+            <form id="register" class="input-group">
+                <input type="text" class="input-field" placeholder="User Id" ng-model="username" required>
+                <input type="email" class="input-field" placeholder="Email Id" ng-model="email" required>
+                <input type="text" class="input-field" placeholder="Enter Password" ng-model="password" required>
+                <br>
+                <input type="checkbox" class="check-box"><span>I agree to the Terms and Conditions </span>
+                <button type="submit" class="submit-btn" ng-click="register()">Register</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        var x = document.getElementById("login");
+        var y = document.getElementById("register");
+        var z = document.getElementById("btn");
+
+        function register() {
+            x.style.left = "-400px";
+            y.style.left = "50px";
+            z.style.left = "110px";
+        }
+
+        function login() {
+            x.style.left = "50px";
+            y.style.left = "450px";
+            z.style.left = "0px";
+        }
+    </script>
+
+    <script>
+        var myApp = angular.module('myApp', []);
+        myApp.controller("regUserController", function ($scope, $http) {
+            $scope.register = function () {
+                var bearer = "";
+                var user = {
+                    grant_type: 'password',
+                    Email: $scope.email,
+                    password: $scope.password,
+                    UserId: $scope.UserId
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "https://localhost:44339/api/Account/Register",
+                    data: user,
+                    contentType: "application/x-www-form-urlencoded",
+                    dataType: "text",
+                    success: function (data) {
+                        alert("registered successfully");
+                    },
+                    failure: function (response) {
+                        alert("failed " + JSON.stringify(response));
+                    },
+                    error: function (response) {
+                        alert("On Error " + JSON.stringify(response));
+                    }
+                });
+            }
+        });
+        myApp.controller("loginController", function ($scope, $http) {
+            $scope.signIn = function () {
+                var bearer = "";
+                var user = {
+                    grant_type: 'password',
+                    username: $scope.email,
+                    password: $scope.password
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "https://localhost:44339/token",
+                    data: user,
+                    contentType: "application/x-www-form-urlencoded",
+                    dataType: "json",
+                    success: function (data) {
+                        bearer = data.access_token;
+                        localStorage.setItem('token', bearer);
+                        window.location.href =<a href="../dashboard.html">../dashboard.html</a>;
+                    },
+                    failure: function (response) {
+                        alert("Failed" + response.responseText);
+                        alert(JSON.stringify(response));
+                    },
+                    error: function (response) {
+                        alert("Error" + response.responseText);
+                        alert(JSON.stringify(response));
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

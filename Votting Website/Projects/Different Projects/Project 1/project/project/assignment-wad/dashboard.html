@@ -1,0 +1,221 @@
+﻿<html>
+<head>
+
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="Scripts/angular.min.js"></script>
+    <script src="Scripts/jquery-3.4.1.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+</head>
+<body ng-app="dashboard" ng-controller="myController">
+    <div class="container">
+        <h2>flight Record</h2>
+        <button type="button" class="btn btn-primary" data-toggle="modal" datatarget="#myModal" id="btnEmpty" ng-click="displayForAdd()">
+            Add New
+            Record
+        </button><br /><br />
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">flight_id</th>
+                    <th scope="col">airline_name</th>
+                    <th scope="col">from_location</th>
+                    <th scope="col">to_location</th>
+                    <th scope="col">departure_time</th>
+                    <th scope="col">arrival_time</th>
+                    <th scope="col">duration</th>
+                    <th scope="col">total_seats</th>
+                </tr>
+            </thead>
+            <tbody id="tabcontent">
+                <tr ng-repeat="x in data">
+                    <td>{{ x.flight_id }}</td>
+                    <td>{{ x.airline_name }}</td>
+                    <td>{{ x.from_location }}</td>
+                    <td>{{ x.to_location }}</td>
+                    <td>{{ x.departure_time }}</td>
+                    <td>{{ x.arrival_time }}</td>
+                    <td>{{ x.duration }}</td>
+                    <td>{{ x.total_seats }}</td>
+
+                    <td><a data-toggle="modal" data-target="#myModal" ng-click="displayForUpdate(x)">Edit</a>|<a data-toggle="modal" data-target="#myModal" ng-click="displayForRemove(x)">Delete</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="label-danger">{{error}}</h3>
+    </div>
+    <div class="modal" id="myModal" tabindex="-1" role="dialog" arialabelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">{{operation}}</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="doctor_id">flight_id</label>
+                        <input type="text" class="form-control" ng-model="flight_id" placeholder="flight_id" />
+                    </div>
+                    <div class="form-group">
+                        <label for="name">airline_name</label>
+                        <input type="text" class="form-control" ng-model="airline_name" placeholder="airline_name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="age">from_location</label>
+                        <input type="text" class="form-control" ng-model="from_location" placeholder="from_location" />
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">to_location</label>
+                        <input type="text" class="form-control" ng-model="to_location" placeholder="to_location" />
+                    </div>
+                    <div class="form-group">
+                        <label for="adress">departure_time</label>
+                        <input type="text" class="form-control" ng-model="departure_time" placeholder="departure_time" />
+                    </div>
+                    <div class="form-group">
+                        <label for="adress">arival_time</label>
+                        <input type="text" class="form-control" ng-model="departure_time" placeholder="departure_time" />
+                    </div>
+                    <div class="form-group">
+                        <label for="adress">duration</label>
+                        <input type="text" class="form-control" ng-model="duration" placeholder="duration" />
+                    </div>
+                    <div class="form-group">
+                        <label for="adress">total_seats</label>
+                        <input type="text" class="form-control" ng-model="total_seats" placeholder="total_seats" />
+                    </div>
+                    <button type="button" class="btn btn-success" data-target="myModal" datadismiss="modal" ng-click="addNewRecord()" id="btnAdd">Add</button>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bind="myModal" datadismiss="modal" ng-click="deleteRecord()" id="btnDelete">Delete</button>
+            <button type="button" class="btn btn-primary" data-bind="myModal" datadismiss="modal" ng-click="updateRecord()" id="btnUpdate">Update</button>
+            <button type="button" class="btn btn-default" datadismiss="modal">Close</button>
+        </div>
+    </div>
+    <script>
+            var myApp = angular.module('dashboard', []);
+            myApp.controller("myController", function ($scope, $http) {
+            //<!-- function that executes after calling it -->
+            var onSuccess = function (myPersonData, status, headers, config) {
+            $scope.data = myPersonData.data;
+            };
+            //<!-- function that executes after calling it -->
+            var onError = function (myPersonData, status, headers, config) {
+            $scope.error = "Error "+status;
+            };
+            $scope.displayForAdd=function(){
+                $scope.operation = "Add New Record";
+
+                $("#myModal").show();
+
+            }
+            $scope.displayForUpdate = function (value) {
+                $scope.operation = "Update Record";
+                $scope.flight_id = value.flight_id;
+                $scope.airline_name = value.airline_name;
+                $scope.from_location = value.to_location;
+                $scope.departure_time = value.departure_time;
+                $scope.arrival_time = value.arrival_time;
+                $scope.duration = value.duration;
+                $scope.total_seats = value.total_seats;
+            $("#btnDelete").hide();
+            $("#btnAdd").hide();
+            }
+            $scope.displayForRemove = function (value) {
+            $scope.operation="Remove Record";
+                $scope.flight_id = value.flight_id;
+                $scope.airline_name = value.airline_name;
+                $scope.from_location = value.from_location;
+                $scope.to_location = value.to_location;
+                $scope.departure_time = value.departure_time;
+                $scope.arrival_time = value.arrival_time;
+                $scope.duration = value.duration;
+                $scope.total_seats = value.total_seats;
+            $("#btnUpdate").hide();
+            $("#btnAdd").hide();
+            }
+            $scope.addNewRecord = function () {
+                var flight = {
+                    "flight_id": $scope.flight_id,
+                    "airline_name": $scope.airline_name,
+                    "from_location": $scope.from_location,
+                    "to_location": $scope.to_location,
+                    "departure_time": $scope.departure_time,
+                    "arrival_time": $scope.arrival_time,
+                    "duration": $scope.duration,
+                    "total_seats": $scope.total_seats,
+                   
+                };
+            var req = {
+            method: 'POST',
+                url: 'api/flights',
+            headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            'Accept': 'application/json',
+            'Authorization': 'bearer ' + localStorage.getItem('token')
+            }
+            };
+            resetOptions();
+                var promise = $http.post("https://localhost:44301/api/flights/",flight, req);
+                promise.then(onSuccess, onError);
+            }
+            $scope.deleteRecord=function(){
+            var req = {
+                method: 'DELETE',
+                url: 'api/flights' + $scope.flight_id,
+            headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            'Accept': 'application/json',
+            'Authorization': 'bearer ' + localStorage.getItem('token')
+            }
+            };
+                var promise = $http.delete("https://localhost:44301/api/flights/" + $scope.flight_id, req);
+                promise.then(onSuccess, onError);
+            resetOptions();
+            }
+            $scope.updateRecord=function(){
+            var flight = {
+                "flight_id": $scope.flight_id,
+                "airline_name": $scope.airline_name,
+                "from_location": $scope.from_location,
+                "to_location": $scope.to_location,
+                "departure_time": $scope.departure_time,
+                "arrival_time": $scope.arrival_time,
+                "duration": $scope.duration,
+                "total_seats": $scope.total_seats,
+            };
+            var req = {
+                method: 'PUT',
+                url: 'api/flights' + $scope.flight_id,
+            headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            'Accept': 'application/json',
+            'Authorization': 'bearer ' + localStorage.getItem('token')
+            }
+                };
+                var promise = $http.put("https://localhost:44301/api/flights/" + $scope.flight_id, flight, req);
+                promise.then(onSuccess, onError);
+            resetOptions();
+            }
+            resetOptions=function(){
+            $("#btnDelete").show();
+            $("#btnAdd").show();
+            $("#btnUpdate").show();
+            }
+            //<!-- code that executes on page load without call -->
+            var req = {
+            method: 'GET',
+            url: '/api/flights',
+            headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            'Accept': 'application/json',
+            'Authorization': 'bearer ' + localStorage.getItem('token')
+            }
+                };
+                var promise = $http.get("https://localhost:44301/api/flights/", req);
+                promise.then(onSuccess, onError);
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="assignmemt3voteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="admin_login">
+    <Key>
+      <PropertyRef Name="id_counter" />
+    </Key>
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="user_email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="id_counter" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="userlogin" Relationship="Self.FK_admin_login_ToTable" FromRole="admin_login" ToRole="userlogin" />
+  </EntityType>
+  <EntityType Name="castvote">
+    <Key>
+      <PropertyRef Name="id_counter" />
+    </Key>
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="party" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="post_mn" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="post" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="useremail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="id_counter" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="userlogin" Relationship="Self.useremail" FromRole="castvote" ToRole="userlogin" />
+  </EntityType>
+  <EntityType Name="userlogin">
+    <Key>
+      <PropertyRef Name="email" />
+    </Key>
+    <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="admin_login" Relationship="Self.FK_admin_login_ToTable" FromRole="userlogin" ToRole="admin_login" />
+    <NavigationProperty Name="castvotes" Relationship="Self.useremail" FromRole="userlogin" ToRole="castvote" />
+    <NavigationProperty Name="verifications" Relationship="Self.FK_verification_ToTable" FromRole="userlogin" ToRole="verification" />
+    <NavigationProperty Name="vote_History" Relationship="Self.FK_vote_History_ToTable" FromRole="userlogin" ToRole="vote_History" />
+  </EntityType>
+  <EntityType Name="verification">
+    <Key>
+      <PropertyRef Name="email" />
+    </Key>
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CNIC" Type="Int32" Nullable="false" />
+    <Property Name="phone_Number" Type="Int32" Nullable="false" />
+    <Property Name="user_email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="userlogin" Relationship="Self.FK_verification_ToTable" FromRole="verification" ToRole="userlogin" />
+  </EntityType>
+  <EntityType Name="vote_History">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Party" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="totalvotes" Type="Int32" Nullable="false" />
+    <Property Name="votecasted" Type="Int32" Nullable="false" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Day" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="user_email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="userlogin" Relationship="Self.FK_vote_History_ToTable" FromRole="vote_History" ToRole="userlogin" />
+  </EntityType>
+  <Association Name="FK_admin_login_ToTable">
+    <End Role="userlogin" Type="Self.userlogin" Multiplicity="0..1" />
+    <End Role="admin_login" Type="Self.admin_login" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="userlogin">
+        <PropertyRef Name="email" />
+      </Principal>
+      <Dependent Role="admin_login">
+        <PropertyRef Name="user_email" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="useremail">
+    <End Role="userlogin" Type="Self.userlogin" Multiplicity="0..1" />
+    <End Role="castvote" Type="Self.castvote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="userlogin">
+        <PropertyRef Name="email" />
+      </Principal>
+      <Dependent Role="castvote">
+        <PropertyRef Name="useremail" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_verification_ToTable">
+    <End Role="userlogin" Type="Self.userlogin" Multiplicity="1" />
+    <End Role="verification" Type="Self.verification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="userlogin">
+        <PropertyRef Name="email" />
+      </Principal>
+      <Dependent Role="verification">
+        <PropertyRef Name="user_email" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_vote_History_ToTable">
+    <End Role="userlogin" Type="Self.userlogin" Multiplicity="1" />
+    <End Role="vote_History" Type="Self.vote_History" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="userlogin">
+        <PropertyRef Name="email" />
+      </Principal>
+      <Dependent Role="vote_History">
+        <PropertyRef Name="user_email" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="assignmemt3voteEntities2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="admin_login" EntityType="Self.admin_login" />
+    <EntitySet Name="castvotes" EntityType="Self.castvote" />
+    <EntitySet Name="userlogins" EntityType="Self.userlogin" />
+    <EntitySet Name="verifications" EntityType="Self.verification" />
+    <EntitySet Name="vote_History" EntityType="Self.vote_History" />
+    <AssociationSet Name="FK_admin_login_ToTable" Association="Self.FK_admin_login_ToTable">
+      <End Role="userlogin" EntitySet="userlogins" />
+      <End Role="admin_login" EntitySet="admin_login" />
+    </AssociationSet>
+    <AssociationSet Name="useremail" Association="Self.useremail">
+      <End Role="userlogin" EntitySet="userlogins" />
+      <End Role="castvote" EntitySet="castvotes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_verification_ToTable" Association="Self.FK_verification_ToTable">
+      <End Role="userlogin" EntitySet="userlogins" />
+      <End Role="verification" EntitySet="verifications" />
+    </AssociationSet>
+    <AssociationSet Name="FK_vote_History_ToTable" Association="Self.FK_vote_History_ToTable">
+      <End Role="userlogin" EntitySet="userlogins" />
+      <End Role="vote_History" EntitySet="vote_History" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

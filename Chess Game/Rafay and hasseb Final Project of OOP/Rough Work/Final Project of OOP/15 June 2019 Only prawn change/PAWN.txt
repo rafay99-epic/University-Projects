@@ -1,0 +1,93 @@
+                                       PAWN.H
+
+#pragma once
+#include<iostream>
+#include<string>
+#include"CHESS.h"
+
+using namespace std;
+
+class Pawn :virtual public CHESS
+{
+protected:
+	string a; // to check the movement for the pawn
+public:
+	Pawn();
+	~Pawn();
+	void seta(string choice);
+	void condition();
+};
+
+
+
+
+
+
+
+
+                                 PAWN.CCP
+
+#include "Pawn.h"
+#include<iostream>
+#include<string>
+
+using namespace std;
+
+
+Pawn::Pawn()
+{
+}
+Pawn::~Pawn()
+{
+}
+void Pawn::seta(string choice)
+{
+	a = choice;
+}
+void Pawn::condition()
+{
+
+		string get[1][2],to[1][2];
+		for (int i = 0; i < 1; i++)
+		{
+			for (int j = 0; j < 2; j++)
+			{
+				cout << "Enter the index of dice to move according to x-axis : ";
+				cin >> get[i][j];
+			}
+		}
+		for (int i = 0; i < 1; i++)
+		{
+			for (int j = 0; j < 2; j++)
+			{
+				cout << "Enter the index of  to place according to x-axis : ";
+				cin >> to[i][j];
+			}
+		}
+
+	
+		if (get[1][2] == "P" || get[1][2] == "p")
+		{
+			for (int i = 0; i < 1; i++)
+			{
+				for (int j = 0; j < 2; j++)
+				{
+					to[i][j] == "P";
+				}
+				continue;
+			}
+
+
+		}
+					
+			
+		/*cout << "Enter the index of dice to move according to y-axis : ";
+		cin >> fy;
+
+		cout << "Enter the index of dice to fit according to x-axis : ";
+		cin >> tx;
+		cout << "Enter the index of dice to fit according to y-axis : ";
+		cin >> ty;*/
+		
+
+}
