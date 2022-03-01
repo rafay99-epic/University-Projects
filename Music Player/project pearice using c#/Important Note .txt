@@ -1,0 +1,1 @@
+In c# without any function it is impossiable so please stick with c++

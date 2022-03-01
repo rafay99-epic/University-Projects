@@ -1,0 +1,439 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+
+class Piece {
+
+	private:
+		//private members
+		//private methods		
+
+	public:
+		//public members
+		string label;				//the name of the piece ("Kn", "Bi", etc.)
+		int currentRow;			//keeps up with row position
+		int currentColumn;	//keeps up with column position
+		string color;				//keeps up with which color the piece is 
+		bool canHop;				//determines whether piece can jump over other pieces
+
+		//public methods
+		Piece(string, int, int, string);			//constructor
+		virtual bool isMoveLegal(int, int);	//validates that the move the player chose can be performed by this piece		
+
+};
+
+Piece::Piece(string lab, int row, int col, string c) {
+	color = c;
+	//appends a B or W at the end of a piece's name
+	if (color == "black") {	label = lab + "-B"; }
+	else {	label = lab + "-W"; }
+	currentRow = row;
+	currentColumn = col;
+	//since only the knight can jump over other pieces, the default value is false
+	canHop = false;
+} //end of constructor
+
+bool Piece::isMoveLegal(int destRow, int destColumn) {
+	//rook rules.  this method could also simply return true,
+	//since it is going to be overriden by any subclass based on it
+	if (currentRow == destRow || currentColumn == destColumn) {
+		return true;
+	}
+	else return false;
+} //end of isMoveLegal
+
+
+
+
+
+
+
+class Pawn: public Piece {
+
+	private:
+		bool isFirstMove;	//this variable is only necessary for the pawn
+	public:
+		Pawn(int, int, string);		//constructor
+		bool isMoveLegal(int, int);	//validates that the move the player chose can be performed by this piece				
+
+};
+
+Pawn::Pawn (int row, int col, string c) : Piece ("Pn", row, col, c) {
+	//nice and simple
+	isFirstMove = true;		//this variable is only a member of Paw
+} //end of constructor
+
+bool Pawn::isMoveLegal(int newRow, int newColumn) {
+	//pawn movement rules
+	if (isFirstMove && currentColumn == newColumn && abs(newRow - currentRow) == 2) {		
+		isFirstMove = false;
+		return true;
+	}
+	else if (currentColumn == newColumn && abs(newRow - currentRow) == 1) {
+		isFirstMove = false;
+		return true;
+	}
+	return false;
+} //end of isMoveLegal
+
+
+class King: public Piece {
+
+	private:
+	public:
+		King(int, int, string);
+		bool isMoveLegal(int, int);	//validates that the move the player chose can be performed by this piece				
+};
+
+
+class Knight: public Piece {
+
+	private:
+	public:
+		Knight(int, int, string);
+		bool isMoveLegal(int, int);	//validates that the move the player chose can be performed by this piece	
+};
+
+class Queen: public Piece {
+
+	private:
+		//private members
+		//private methods
+
+	public:
+		Queen(int, int, string);
+		bool isMoveLegal(int, int);	//validates that the move the player chose can be performed by this piece				
+
+};
+
+
+class Rook: public Piece {
+
+	private:
+		//private members
+		//private methods
+
+	public:
+		Rook(int, int, string);
+		bool isMoveLegal(int, int);	//validates that the move the player chose can be performed by this piece				
+
+};
+
+class Bishop: public Piece {
+
+	private:
+		//private members
+		//private methods
+
+	public:
+		Bishop(int, int, string);
+		bool isMoveLegal(int, int);	//validates that the move the player chose can be performed by this piece				
+
+};
+
+class Board {
+
+	private:
+		string theBoard [8][8];		//an array of strings which represents the board
+		void eraseBoard();			//this clears the board
+
+	public:
+		Board();					//constructor
+		void drawBoard();		//draws the board 
+		void setPiece(string, int, int);	//this "sets" a piece on the board the first time
+		void setPiece(int, int, int, int);	//this version of the method moves a piece
+};
+
+Board::Board()  {
+	eraseBoard();
+} //end of constructor
+
+void Board::eraseBoard() {
+	for (int r=0; r<8; r++) {
+		for (int c=0; c<8; c++) {
+			theBoard[r][c] = " + ";
+		} //end of columns
+	} //end of rows
+} //end of initializeBoard
+
+void Board::setPiece(string pieceName, int destRow, int destCol) {
+	//implement this
+} //end of setPiece
+
+void Board::setPiece(int sourceRow, int sourceCol, int destRow, int destCol) {
+	//implement this
+} //end of setPiece
+
+void Board::drawBoard() {
+	for (int r=0; r<8; r++) {
+		for (int c=0; c<8; c++) {
+			theBoard[r][c] = " + ";
+		} //end of columns
+	} //end of rows
+} //end of drawBoard
+
+
+class Game {
+
+	private:
+		Board theBoard;
+		vector <Piece*> allThePieces;		//a vector of Piece pointers
+		string whoseTurn;							//holds either "black" or "white"
+		//this method converts the user's input into a form the board can understand.
+		//for instance, it changes the user's input "B" to 2.  it also does the same for
+		//the input "3", which is changed to a 3.
+		int convertStringToNum(char); //implement this
+		//this method constructs all the pieces and places them on the board
+		void createPieces();//implement part of this; do one or two pieces
+		Piece * findPiece(int, int);		//locates a particular piece using row and column coordinates
+		bool intersectsOtherPieces(int, int, int, int); //checks whether path moves through other pieces
+		//checks for a piece at a location, then removes it from the board
+		void capturePiece(int, int);
+
+	public:
+		//public methods
+		Game();		//constructor
+		~Game();		//destructor
+		void takeTurns();		//swaps whose turn it is and ask for moves
+		//tries to move a piece.  if there are no problems, it returns true.  
+		//if it is unsuccesful (for instance, if the move is illegal), it returns false.
+		bool movePiece(int, int, int, int);
+		//checks whether each team still has their king, if one is missing, the other
+		//team is declared the winner
+		bool isGameOver();
+		
+
+};
+
+Game::Game() {
+	createPieces();
+	whoseTurn = "white";
+	cout <<"Let the gaes begin! \n";
+} // end of createPieces
+
+void Game::createPieces() {
+	for (int i=1; i<=8; i++) {		
+		allThePieces.push_back(new Pawn (2, i, "black"));
+		allThePieces.push_back(new Pawn (7, i, "white"));
+		/*
+		allThePieces.push_back(new King (1, 5, "black"));
+		allThePieces.push_back(new King (8, 5, "white"));
+		allThePieces.push_back(new Queen (1, 4, "black"));
+		allThePieces.push_back(new Queen (8, 4, "white"));
+		allThePieces.push_back(new Knight (1, 2, "black"));
+		allThePieces.push_back(new Knight (8, 2, "white"));
+		allThePieces.push_back(new Knight (1, 7, "black"));
+		allThePieces.push_back(new Knight (8, 7, "white"));
+		allThePieces.push_back(new Rook (1, i, "black"));
+		allThePieces.push_back(new Rook (8, i, "white"));
+		allThePieces.push_back(new Rook (1, i, "black"));
+		allThePieces.push_back(new Rook (8, i, "white"));
+		allThePieces.push_back(new Bishop (1, 8, "black"));
+		allThePieces.push_back(new Bishop (8, 1, "white"));
+		allThePieces.push_back(new Bishop (1, 1, "black"));
+		allThePieces.push_back(new Bishop (8, 8, "white"));*/
+	}
+
+	for (int i=0; i<allThePieces.size(); i++) {
+		theBoard.setPiece(allThePieces.at(i)->label, allThePieces.at(i)->currentRow-1, allThePieces.at(i)->currentColumn-1);
+	}
+} //end of createPieces
+
+bool Game::movePiece(int pieceRow, int pieceCol, int destRow, int destCol) {
+
+	Piece * tempPiece;
+	tempPiece = findPiece(pieceRow, pieceCol);
+	//first, make sure there's a piece where they selected
+	if (tempPiece->currentRow == -1) { 
+		cout<<"no piece exists at "<<pieceRow<<", "<<pieceCol<<"\n";  
+		return false;
+	}
+	//next, make sure they are moving one of their own pieces
+	else if (whoseTurn != tempPiece->color) {
+		cout<<"that is not your piece\n";
+		return false;
+	}
+	//next, check that the destination is not the same as the current location
+	else if (pieceRow == destRow && pieceCol == destCol) {
+		cout<<"your piece is already at that location\n";
+		return false;
+	}
+	//next, check to make sure i'm not moving onto a piece of my own color
+	else if (findPiece(destRow, destCol)->color == tempPiece->color) {
+		cout<<"can't move on top of a piece of your own color\n";
+		return false;
+	}
+	//next, make sure the path is clear to my goal spot
+	else if (intersectsOtherPieces(pieceRow, pieceCol, destRow, destCol) && 
+		!tempPiece->canHop ) {
+		cout<<"there is a piece in your way.  only knights can jump over other pieces.\n";
+		return false;
+	}
+	//next, check to see if the move is legal for that piece
+	else if (!tempPiece->isMoveLegal(destRow, destCol)) {
+		cout<<"sorry, that move is not legal!\n";
+		return false;
+	}
+
+	//if we've made it this far, we're okay.  place the piece
+	cout<<"moving piece "<<tempPiece->label<<" to "<<destRow<<", "<<destCol<<"\n";
+	//capture any piece that's there
+	capturePiece(destRow, destCol);
+	//inform the board
+	theBoard.setPiece(tempPiece->currentRow-1, tempPiece->currentColumn-1, destRow-1, destCol-1);
+	//change the piece's location
+	tempPiece->currentRow = destRow;
+	tempPiece->currentColumn = destCol;
+	
+} //end of movePiece
+
+
+Piece * Game::findPiece(int row, int col) {
+	bool foundPiece = false;
+	Piece * currPiece;
+
+	for (int i=0; i<allThePieces.size(); i++) {  //iterate through all the pieces
+		currPiece = allThePieces.at(i);	
+
+		if (currPiece->currentRow == row && currPiece->currentColumn == col) {
+			return currPiece;
+			foundPiece = true;
+		} //end of searching for piece
+	}
+
+	if (!foundPiece) { 	
+		return &Piece("no piece", -1, -1, "no color");
+	}
+} //end of findPiece
+
+
+bool Game::intersectsOtherPieces(int sourceRow, int sourceColumn, int destRow, int destColumn) {
+	int tempRow = sourceRow;
+	int tempColumn = sourceColumn;
+	
+	while(tempRow != destRow || tempColumn != destColumn) {
+		if(tempRow < destRow) { tempRow++; }
+		else if (tempRow > destRow) { tempRow--; }
+
+		if(tempColumn < destColumn) { tempColumn++; }
+		else if (tempColumn > destColumn) { tempColumn--; }
+
+		if (findPiece(tempRow, tempColumn)->currentRow != -1) {
+			//cout<<"found piece in your way at "<<tempRow<<", "<<tempColumn;
+			return true;
+		}
+		return false;
+
+	} //end of while
+
+} //end of intersectsOtherPieces
+
+int Game::convertStringToNum(char letter) {
+	//implement this, it does not work
+	return -1;
+} //end of convertLetterToNum
+
+void Game::takeTurns() {
+	if (whoseTurn == "white") { whoseTurn = "black";  }
+	else { whoseTurn = "white";  }
+	char source1, source2, dest1, dest2;
+	int sRow, sCol, dRow, dCol;
+	bool moveSuccessful = false;
+
+	while (!moveSuccessful) {
+		theBoard.drawBoard();
+		//prompt for move
+		cout<<whoseTurn<<", which piece would you like to move? > ";
+		cin>>source1>>source2;
+		cout<<"where would you like to move? > ";
+		cin>>dest1>>dest2;
+		system("cls");
+
+		//convert the letter to a number
+		if (isalpha(source1)) {
+			sCol = convertStringToNum(source1);
+			sRow = convertStringToNum(source2);
+		}
+		else {
+			sRow = convertStringToNum(source1);
+			sCol = convertStringToNum(source2);
+		}
+		if (isalpha(dest1)) {
+			dCol = convertStringToNum(dest1);
+			dRow = convertStringToNum(dest2);
+		}
+		else {
+			dRow = convertStringToNum(dest1);
+			dCol = convertStringToNum(dest2);
+		}
+		moveSuccessful = movePiece(sRow, sCol, dRow, dCol);
+	} //end of while move is not successful
+} //end of takeTurns
+
+void Game::capturePiece(int row, int col) {
+	Piece * currPiece;
+	int targetIndex = -1;
+
+	for (int i=0; i<allThePieces.size(); i++) {  //iterate through all the pieces
+		currPiece = allThePieces.at(i);	
+
+		if (currPiece->currentRow == row && currPiece->currentColumn == col) {
+			targetIndex = i;
+			cout<<"you captured the "<<currPiece->label<<"\n";
+		} //end of searching for piece
+	}
+	if (targetIndex != -1) {
+		allThePieces.erase(allThePieces.begin() + targetIndex);
+	}
+} //end of capturePiece
+
+bool Game::isGameOver() {
+	bool foundWhiteKing = false;
+	bool foundBlackKing = false;
+	Piece * currPiece;
+
+	for (int i=0; i<allThePieces.size(); i++) {  //iterate through all the pieces
+		currPiece = allThePieces.at(i);	
+		if (currPiece->label == "K-W") { foundWhiteKing = true; }
+		else if (currPiece->label == "K-B") { foundBlackKing = true; }
+	}
+
+	if (!foundWhiteKing) { 	
+		cout<<"Black team wins! Congratulations!";  
+		return true;
+	}
+	else if (!foundBlackKing) { 	
+		cout<<"White team wins! Congratulations!";  
+		return true;
+	}
+	else {  return false;  }
+} //end of isGameOver
+
+Game::~Game() {
+	for (int i=0; i<allThePieces.size(); i++) {  //iterate through all the pieces
+		delete allThePieces.at(i);
+	}
+} //end of destructor
+
+
+
+
+
+
+
+
+
+int main() {
+	int kludge;
+	Game theGame;
+	
+	while (!theGame.isGameOver()) {			
+		theGame.takeTurns();
+	} //end of while game is not over
+
+	cin>>kludge;
+	return 0;
+} //end of main

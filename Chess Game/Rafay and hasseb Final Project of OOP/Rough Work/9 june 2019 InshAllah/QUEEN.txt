@@ -1,0 +1,47 @@
+                                           QUEEN.H
+
+#pragma once
+#include<iostream>
+#include<string>
+#include"CHESS.h"
+
+using namespace std;
+
+class Quene :virtual public CHESS
+{
+protected:
+	string k;  ///to check the movment for the queen 
+public:
+	Quene();
+	~Quene();
+	void setk(string choice);
+	
+};
+
+
+
+
+
+
+                                        QUEEN.CCP
+
+#include "Quene.h"
+#include<iostream>
+#include<string>
+
+
+using namespace std;
+
+
+Quene::Quene()
+{
+}
+
+
+Quene::~Quene()
+{
+}
+void Quene ::setk(string choice)
+{
+	choice = k;
+}

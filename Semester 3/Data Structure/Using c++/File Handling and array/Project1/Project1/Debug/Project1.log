@@ -1,3 +1,0 @@
-﻿  song.sourcefile.cpp
-Source.obj : error LNK2005: _main already defined in song.sourcefile.obj
-C:\Users\maraf\Desktop\Project1\Debug\Project1.exe : fatal error LNK1169: one or more multiply defined symbols found

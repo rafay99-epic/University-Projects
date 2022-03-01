@@ -1,0 +1,21 @@
+if( board[0]='X'&&board[1]=='X'&&board[2]=='X'&&board[3]=='X'&&board[4]=='X')
+		{
+			cout<<"PLAYER 1[X]   WINS ";
+		}
+		else if( board[5]='X'&&board[6]=='X'&&board[7]=='X'&&board[8]=='X'&&board[9]=='X')
+		{
+			cout<<"PLAYER 1[X]   WINS ";
+		}
+		else if( board[10]='X'&&board[11]=='X'&&board[12]=='X'&&board[13]=='X'&&board[14]=='X')
+		{
+			cout<<"PLAYER 1[X]   WINS ";
+		}
+		else if( board[15]=='X'&&board[16]=='X'&&board[17]=='X'&&board[18]=='X'&&board[19]=='X')
+		{
+			cout<<"PLAYER 1[X]   WINS ";
+		}
+		else if( board[20]=='X'&&board[21]=='X'&&board[22]=='X'&&board[23]=='X'&&board[24]=='X')
+		{
+			cout<<"PLAYER 1[X]   WINS ";
+		}
+		

@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="flight">
+          <Key>
+            <PropertyRef Name="flight_id" />
+          </Key>
+          <Property Name="flight_id" Type="int" Nullable="false" />
+          <Property Name="airline_name" Type="varchar" MaxLength="10" />
+          <Property Name="from_location" Type="varchar" MaxLength="10" />
+          <Property Name="to_location" Type="varchar" MaxLength="10" />
+          <Property Name="departure_time" Type="datetime" />
+          <Property Name="arrival_time" Type="datetime" />
+          <Property Name="duration" Type="time" Precision="7" />
+          <Property Name="total_seats" Type="int" />
+        </EntityType>
+        <EntityType Name="flight_detail">
+          <Key>
+            <PropertyRef Name="flight_no" />
+          </Key>
+          <Property Name="flight_departure_date" Type="datetime" />
+          <Property Name="price" Type="int" />
+          <Property Name="available_seats" Type="int" />
+          <Property Name="flight_id" Type="int" Nullable="false" />
+          <Property Name="flight_no" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_flight_detail_flight">
+          <End Role="flight" Type="Self.flight" Multiplicity="1" />
+          <End Role="flight_detail" Type="Self.flight_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="flight">
+              <PropertyRef Name="flight_id" />
+            </Principal>
+            <Dependent Role="flight_detail">
+              <PropertyRef Name="flight_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database1ModelStoreContainer">
+          <EntitySet Name="flight" EntityType="Self.flight" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="flight_detail" EntityType="Self.flight_detail" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_flight_detail_flight" Association="Self.FK_flight_detail_flight">
+            <End Role="flight" EntitySet="flight" />
+            <End Role="flight_detail" EntitySet="flight_detail" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Database1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="flight">
+          <Key>
+            <PropertyRef Name="flight_id" />
+          </Key>
+          <Property Name="flight_id" Type="Int32" Nullable="false" />
+          <Property Name="airline_name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="from_location" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="to_location" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="departure_time" Type="DateTime" Precision="3" />
+          <Property Name="arrival_time" Type="DateTime" Precision="3" />
+          <Property Name="duration" Type="Time" Precision="7" />
+          <Property Name="total_seats" Type="Int32" />
+          <NavigationProperty Name="flight_detail" Relationship="Self.FK_flight_detail_flight" FromRole="flight" ToRole="flight_detail" />
+        </EntityType>
+        <EntityType Name="flight_detail">
+          <Key>
+            <PropertyRef Name="flight_no" />
+          </Key>
+          <Property Name="flight_departure_date" Type="DateTime" Precision="3" />
+          <Property Name="price" Type="Int32" />
+          <Property Name="available_seats" Type="Int32" />
+          <Property Name="flight_id" Type="Int32" Nullable="false" />
+          <Property Name="flight_no" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="flight" Relationship="Self.FK_flight_detail_flight" FromRole="flight_detail" ToRole="flight" />
+        </EntityType>
+        <Association Name="FK_flight_detail_flight">
+          <End Role="flight" Type="Self.flight" Multiplicity="1" />
+          <End Role="flight_detail" Type="Self.flight_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="flight">
+              <PropertyRef Name="flight_id" />
+            </Principal>
+            <Dependent Role="flight_detail">
+              <PropertyRef Name="flight_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="flights" EntityType="Self.flight" />
+          <EntitySet Name="flight_detail" EntityType="Self.flight_detail" />
+          <AssociationSet Name="FK_flight_detail_flight" Association="Self.FK_flight_detail_flight">
+            <End Role="flight" EntitySet="flights" />
+            <End Role="flight_detail" EntitySet="flight_detail" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Database1ModelStoreContainer" CdmEntityContainer="Database1Entities">
+          <EntitySetMapping Name="flights">
+            <EntityTypeMapping TypeName="Database1Model.flight">
+              <MappingFragment StoreEntitySet="flight">
+                <ScalarProperty Name="flight_id" ColumnName="flight_id" />
+                <ScalarProperty Name="airline_name" ColumnName="airline_name" />
+                <ScalarProperty Name="from_location" ColumnName="from_location" />
+                <ScalarProperty Name="to_location" ColumnName="to_location" />
+                <ScalarProperty Name="departure_time" ColumnName="departure_time" />
+                <ScalarProperty Name="arrival_time" ColumnName="arrival_time" />
+                <ScalarProperty Name="duration" ColumnName="duration" />
+                <ScalarProperty Name="total_seats" ColumnName="total_seats" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="flight_detail">
+            <EntityTypeMapping TypeName="Database1Model.flight_detail">
+              <MappingFragment StoreEntitySet="flight_detail">
+                <ScalarProperty Name="flight_departure_date" ColumnName="flight_departure_date" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="available_seats" ColumnName="available_seats" />
+                <ScalarProperty Name="flight_id" ColumnName="flight_id" />
+                <ScalarProperty Name="flight_no" ColumnName="flight_no" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
